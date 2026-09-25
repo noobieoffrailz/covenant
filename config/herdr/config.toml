@@ -1,0 +1,7 @@
+onboarding = false
+
+[theme.custom]
+accent = "#d7b3ff"
+
+[keys]
+prefix = "ctrl+a"

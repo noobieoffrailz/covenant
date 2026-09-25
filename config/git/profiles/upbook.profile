@@ -1,0 +1,6 @@
+[credential]
+    username = iilei
+
+[user]
+    name = Iivari Leinonen
+    email = iivari.leinonen@upcloud.com

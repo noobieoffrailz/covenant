@@ -1,0 +1,50 @@
+{
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.11.4",
+  "schemes" : [
+    {
+      "if" : {
+        "device" : {
+          "category" : "trackpad",
+          "productID" : "0x323",
+          "productName" : "M53",
+          "serialNumber" : "94:21:57:E4:E7:C3",
+          "vendorID" : "0x4c"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 10.8804,
+        "speed" : 1
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "trackpad",
+          "productID" : "0x323",
+          "productName" : "Magic Mouse",
+          "serialNumber" : "94:21:57:E4:E7:C3",
+          "vendorID" : "0x4c"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 12,
+        "speed" : 1
+      }
+    },
+    {
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productID" : "0x269",
+          "productName" : "MQ3",
+          "serialNumber" : "94:B0:1F:0A:43:5B",
+          "vendorID" : "0x4c"
+        }
+      },
+      "pointer" : {
+        "acceleration" : 19.6263,
+        "speed" : 0
+      }
+    }
+  ]
+}

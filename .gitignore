@@ -1,0 +1,13 @@
+.DS_Store
+
+/config/git/profiles/machine.profile
+
+/config/herdr/*
+!/config/herdr/config.toml
+
+/config/zed/*
+!/config/zed/settings.json
+!/config/zed/keymap.json
+!/config/zed/tasks.json
+!/config/zed/themes/
+!/config/zed/snippets/

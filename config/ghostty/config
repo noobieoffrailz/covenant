@@ -1,0 +1,57 @@
+# ============================================================================
+# Theme
+# ============================================================================
+# Other theme used previously:
+# - rose-pine-moon, rose-pine-dawn
+# - dark:catppuccin-frappe,light:catppuccin-latte
+# - dark:nord,light:il-nord
+# - dark:github-dark-default,light:gitlab-light
+# - dark:Catppuccin Frappe,light:Seoulbones Light
+
+# theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+theme = Catppuccin Macchiato
+
+# ============================================================================
+# Shaders
+# ============================================================================
+custom-shader = ~/.config/ghostty/shaders/dots.glsl
+custom-shader-animation = false
+
+# ============================================================================
+# Icon
+# ============================================================================
+macos-icon = custom
+macos-custom-icon = ~/.config/ghostty/icons/ghostty-original.icns
+
+# ============================================================================
+# Window
+# ============================================================================
+window-padding-y = 30
+window-padding-x = 30
+# macos-titlebar-style = hidden
+
+# ============================================================================
+# Text & Cursor
+# ============================================================================
+cursor-color = #d7b3ff
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
+font-size = 15
+font-family = "JetBrainsMono Nerd Font"
+
+# ============================================================================
+# Keybindings - Split Navigation (Vim-style)
+# ============================================================================
+keybind = super+k=goto_split:up
+keybind = super+j=goto_split:down
+keybind = super+h=goto_split:left
+keybind = super+l=goto_split:right
+
+# unbind hyperkey+enter so macos can handle window tiling
+keybind = super+enter=unbind
+keybind = super+shift+enter=unbind
+keybind = super+ctrl+alt+shift+enter=unbind
+
+# option+backspace
+# macos-option-as-alt = right
