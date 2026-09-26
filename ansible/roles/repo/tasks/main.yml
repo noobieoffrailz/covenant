@@ -1,0 +1,10 @@
+# Run .githooks/* (re-apply after git pull)
+- name: Check git hooks path
+  ansible.builtin.command: git -C "{{ repo_dir }}" config --local core.hooksPath
+  register: hooks_path
+  changed_when: false
+  failed_when: false
+
+- name: Use repo git hooks
+  ansible.builtin.command: git -C "{{ repo_dir }}" config --local core.hooksPath .githooks
+  when: hooks_path.stdout != ".githooks"

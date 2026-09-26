@@ -1,0 +1,28 @@
+# macos/LaunchAgents/*.plist -> ~/Library/LaunchAgents/
+- name: Ensure ~/Library/LaunchAgents exists
+  ansible.builtin.file:
+    path: "{{ home_dir }}/Library/LaunchAgents"
+    state: directory
+
+- name: Find LaunchAgents
+  ansible.builtin.find:
+    paths: "{{ repo_dir }}/macos/LaunchAgents"
+    patterns: "*.plist"
+  register: launch_agents
+
+- name: Link LaunchAgents
+  ansible.builtin.include_tasks: "{{ playbook_dir }}/tasks/link.yml"
+  vars:
+    link_src: "{{ item.path }}"
+    link_dest: "{{ home_dir }}/Library/LaunchAgents/{{ item.path | basename }}"
+  loop: "{{ launch_agents.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
+
+- name: Start LaunchAgents
+  community.general.launchd:
+    name: "{{ item.path | basename | regex_replace('\\.plist$', '') }}"
+    state: started
+  loop: "{{ launch_agents.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"

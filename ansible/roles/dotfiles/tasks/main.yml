@@ -1,0 +1,46 @@
+# tools/X/config -> ~/.config/X
+- name: Ensure ~/.config exists
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.config"
+    state: directory
+
+- name: Find tool configs
+  ansible.builtin.find:
+    paths: "{{ repo_dir }}/tools"
+    patterns: config
+    file_type: directory
+    recurse: true
+    depth: 2
+  register: tool_configs
+
+- name: Link tool configs
+  ansible.builtin.include_tasks: "{{ playbook_dir }}/tasks/link.yml"
+  vars:
+    link_src: "{{ item.path }}"
+    link_dest: "{{ home_dir }}/.config/{{ item.path | dirname | basename }}"
+  loop: "{{ tool_configs.files }}"
+  loop_control:
+    label: "{{ item.path | dirname | basename }}"
+
+# home/* -> ~/* (files are linked one by one, directories are created)
+- name: Ensure ~/.ssh exists
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.ssh"
+    state: directory
+    mode: "0700"
+
+- name: Find home files
+  ansible.builtin.find:
+    paths: "{{ repo_dir }}/home"
+    hidden: true
+    recurse: true
+  register: home_files
+
+- name: Link home files
+  ansible.builtin.include_tasks: "{{ playbook_dir }}/tasks/link.yml"
+  vars:
+    link_src: "{{ item.path }}"
+    link_dest: "{{ home_dir }}/{{ item.path | relpath(repo_dir ~ '/home') }}"
+  loop: "{{ home_files.files }}"
+  loop_control:
+    label: "{{ item.path | relpath(repo_dir ~ '/home') }}"

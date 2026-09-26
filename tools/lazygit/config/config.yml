@@ -1,0 +1,4 @@
+# Only overrides here, see defaults: lazygit --config
+# Theme comes from themes/ via LG_CONFIG_FILE (lazygit.fish)
+gui:
+  nerdFontsVersion: "3"

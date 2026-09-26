@@ -1,0 +1,10 @@
+# Run on the current machine:
+#   ansible-playbook ansible/site.yml --limit "$(hostname -s)" --ask-become-pass
+- name: Configure macOS machines
+  hosts: macs
+  roles:
+    - { role: homebrew, tags: [homebrew] }
+    - { role: dotfiles, tags: [dotfiles] }
+    - { role: macos, tags: [macos] }
+    - { role: shell, tags: [shell] }
+    - { role: repo, tags: [repo] }

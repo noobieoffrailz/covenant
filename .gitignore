@@ -1,15 +1,27 @@
+# misc
 .DS_Store
 
-/config/fish/fish_variables
+# auto-generated
+/tools/eza/config/theme.yml
+/tools/fish/config/fish_variables
+/tools/ghostty/config/machine
+/tools/git/config/profiles/machine.profile
 
-/config/git/profiles/machine.profile
+# 1Password
+/tools/1Password/config/*
+!/tools/1Password/config/ssh/
 
-/config/herdr/*
-!/config/herdr/config.toml
+# lazygit
+/tools/lazygit/config/state.yml
 
-/config/zed/*
-!/config/zed/settings.json
-!/config/zed/keymap.json
-!/config/zed/tasks.json
-!/config/zed/themes/
-!/config/zed/snippets/
+# herdr
+/tools/herdr/config/*
+!/tools/herdr/config/config.template.toml
+
+# zed
+/tools/zed/config/*
+!/tools/zed/config/settings.json
+!/tools/zed/config/keymap.json
+!/tools/zed/config/tasks.json
+!/tools/zed/config/themes/
+!/tools/zed/config/snippets/

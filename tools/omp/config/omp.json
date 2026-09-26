@@ -1,0 +1,85 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "pink": "#F6BDE6",
+    "mauve": "#C6A0F6",
+    "base": "#24273A",
+    "blue": "#8AADF4",
+    "green": "#A6DA95",
+    "red": "#ED8796",
+    "teal": "#8BD5CA",
+    "flamingo": "#F0C6C6",
+    "maroon": "#EE99A0",
+    "peach": "#F5A97F",
+    "sapphire": "#7DC4E4",
+    "surface0": "#363A4F",
+    "surface1": "#494D64",
+    "text": "#CAD3F5",
+    "mantle": "#1e2030"
+  },
+  "upgrade": {
+    "source": "cdn",
+    "interval": "168h",
+    "auto": false,
+    "notice": false
+  },
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "template": "\n"
+        },
+        {
+          "foreground": "p:mauve",
+          "foreground_templates": ["{{ .Env.GLOBAL_THEME_COLOR }}"],
+          "options": {
+            "macos": "\udb80\udd5f"
+          },
+          "style": "plain",
+          "template": "{{ .Env.GLOBAL_PROMPT_ICON }} ",
+          "type": "os"
+        },
+        {
+          "foreground": "p:mauve",
+          "foreground_templates": ["{{ .Env.GLOBAL_THEME_COLOR }}"],
+          "options": {
+            "folder_icon": "..\ue5fe..",
+            "home_icon": "~",
+            "style": "folder"
+          },
+          "style": "plain",
+          "template": " {{ .Path }} ",
+          "type": "path"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "type": "rprompt",
+      "segments": [
+        {
+          "foreground": "p:mauve",
+          "foreground_templates": ["{{ .Env.GLOBAL_THEME_COLOR }}"],
+          "options": {
+            "branch_icon": "\ue725 ",
+            "cherry_pick_icon": "\ue29b ",
+            "commit_icon": "\uf417 ",
+            "merge_icon": "\ue727 ",
+            "no_commits_icon": "\uf0c3 ",
+            "rebase_icon": "\ue728 ",
+            "revert_icon": "\uf0e2 ",
+            "tag_icon": "\uf412 "
+          },
+          "style": "plain",
+          "template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
+          "type": "git"
+        }
+      ]
+    }
+  ],
+  "version": 3,
+  "final_space": true
+}

@@ -1,0 +1,4 @@
+#!/bin/sh
+# Only on branch checkouts ($3 = 1), not on file checkouts
+[ "$3" = "1" ] || exit 0
+exec "$(git rev-parse --show-toplevel)/.githooks/post-merge"

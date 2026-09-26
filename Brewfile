@@ -4,6 +4,7 @@ tap "nikitabobko/tap"
 tap "wouterdebie/tap"
 
 # formulae
+brew "ansible"
 brew "bat"
 brew "eza"
 brew "fish"
@@ -12,6 +13,7 @@ brew "herdr", restart_service: :changed
 brew "jandedobbeleer/oh-my-posh/oh-my-posh", trusted: true
 brew "lazygit"
 brew "mise"
+brew "neovim"
 brew "tailscale"
 brew "tree"
 brew "zoxide"

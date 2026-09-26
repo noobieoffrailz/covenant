@@ -1,0 +1,46 @@
+[alias]
+    undo = reset --soft HEAD^
+
+[core]
+    pager = delta
+
+[delta]
+    line-numbers = true
+    navigate = true
+
+[diff]
+    algorithm = histogram
+
+[fetch]
+    prune = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictStyle = zdiff3
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoStash = true
+
+[push]
+    autoSetupRemote = true
+    default = current
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[include]
+	path = ~/.config/git/profiles/machine.profile
+
+[includeIf "gitdir/i:~/Development/personal/"]
+	path = ~/.config/git/profiles/compooter.profile
+
+[includeIf "gitdir/i:~/Development/work/"]
+	path = ~/.config/git/profiles/upbook.profile

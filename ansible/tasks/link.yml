@@ -1,0 +1,16 @@
+# Symlink link_src -> link_dest. Real files/dirs in the way are moved to *.backup
+- name: "Check {{ link_dest }}"
+  ansible.builtin.stat:
+    path: "{{ link_dest }}"
+  register: link_existing
+
+- name: "Back up existing {{ link_dest }}"
+  ansible.builtin.command: mv "{{ link_dest }}" "{{ link_dest }}.backup"
+  when: link_existing.stat.exists and not link_existing.stat.islnk
+
+- name: "Link {{ link_dest }}"
+  ansible.builtin.file:
+    src: "{{ link_src }}"
+    dest: "{{ link_dest }}"
+    state: link
+    force: true

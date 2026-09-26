@@ -1,0 +1,13 @@
+- name: Check Brewfile
+  ansible.builtin.command: brew bundle check --file="{{ repo_dir }}/Brewfile"
+  environment: &brew_env
+    HOMEBREW_PROFILE: "{{ profile }}"
+    PATH: "/opt/homebrew/bin:{{ ansible_facts['env']['PATH'] }}"
+  register: brew_check
+  changed_when: false
+  failed_when: false
+
+- name: Install packages from Brewfile
+  ansible.builtin.command: brew bundle install --file="{{ repo_dir }}/Brewfile"
+  environment: *brew_env
+  when: brew_check.rc != 0

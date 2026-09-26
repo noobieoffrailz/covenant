@@ -1,0 +1,20 @@
+# sudo is only needed the first time; later runs skip both steps
+- name: Check /etc/shells
+  ansible.builtin.command: grep -qx "{{ fish_path }}" /etc/shells
+  register: fish_in_shells
+  changed_when: false
+  failed_when: false
+
+- name: Allow fish as a login shell
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ fish_path }}"
+  become: true
+  when: fish_in_shells.rc != 0
+
+- name: Set fish as the default shell
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    shell: "{{ fish_path }}"
+  become: true
+  when: ansible_facts['user_shell'] != fish_path

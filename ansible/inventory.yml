@@ -1,0 +1,9 @@
+# Host names must match `hostname -s` (case-sensitive)
+all:
+  children:
+    macs:
+      hosts:
+        Compooter:
+        Upbook:
+      vars:
+        ansible_connection: local
