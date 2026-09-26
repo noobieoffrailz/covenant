@@ -26,3 +26,47 @@
   loop: "{{ launch_agents.files }}"
   loop_control:
     label: "{{ item.path | basename }}"
+
+# --- Directories ---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: directory
+  loop: "{{ macos_directories }}"
+
+# --- Dock: always empty (no pinned apps or stacks) ---
+- name: Check Dock items
+  ansible.builtin.shell: defaults read com.apple.dock {{ item }} 2>/dev/null | tr -d ' \n'
+  loop: [persistent-apps, persistent-others]
+  register: dock_items
+  changed_when: false
+  failed_when: false
+
+- name: Remove all Dock items
+  ansible.builtin.command: defaults write com.apple.dock {{ item.item }} -array
+  loop: "{{ dock_items.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: item.stdout != "()"
+  register: dock_cleared
+
+# --- defaults write (see group_vars/macs.yml) ---
+- name: Apply macOS settings
+  community.general.osx_defaults:
+    domain: "{{ item.domain }}"
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    host: "{{ item.host | default(omit) }}"
+  loop: "{{ macos_defaults }}"
+  loop_control:
+    label: "{{ item.domain }} {{ item.key }}"
+  register: macos_defaults_result
+
+- name: Restart apps whose settings changed
+  ansible.builtin.command: killall {{ item }}
+  loop: >-
+    {{ (macos_defaults_result.results | selectattr('changed') | map(attribute='item')
+        | selectattr('restart', 'defined') | map(attribute='restart') | list
+        + (['Dock'] if dock_cleared is changed else [])) | unique }}
+  failed_when: false

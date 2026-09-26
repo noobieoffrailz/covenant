@@ -12,6 +12,7 @@ brew "git-delta"
 brew "herdr", restart_service: :changed
 brew "jandedobbeleer/oh-my-posh/oh-my-posh", trusted: true
 brew "lazygit"
+brew "mas"
 brew "mise"
 brew "neovim"
 brew "tailscale"
@@ -41,6 +42,11 @@ cask "tableplus"
 cask "tailscale-app"
 cask "wouterdebie/tap/davit", trusted: true
 cask "zed"
+
+# Mac App Store (requires signing in to the App Store first)
+mas "1Password for Safari", id: 1569813296
+mas "AdGuard for Safari", id: 1440147259
+mas "Noir", id: 1592917505
 
 if ENV["HOMEBREW_PROFILE"] == "compooter"
   cask "discord"
