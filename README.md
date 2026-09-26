@@ -71,12 +71,11 @@ For additional git identities, add `tools/git/config/profiles/<profile>.profile`
 
 ## Gotchas
 
-> [!CAUTION]
-> Taking a launch agent off `launch_agents` doesn't remove it! Unload it with `launchctl bootout gui/(id -u)/<label>` and delete its link from `~/Library/LaunchAgents`.
-
-- Ghostty reads its per-machine settings only when it starts. After changing a machine's colors, reload it with Cmd+Shift+,.
-- The menu bar settings are undocumented numbers copied from Compooter, so a macOS update might break them.
-- `com.tailscale.up` exists only because the Tailscale app doesn't reconnect after login ([tailscale#21092](https://github.com/tailscale/tailscale/issues/21092)). It can go once that's fixed.
+- Taking a launch agent off `launch_agents` doesn't remove it automatically!
+  - unload with `launchctl bootout gui/(id -u)/<label>` and delete its link from `~/Library/LaunchAgents`
+- Ghostty reads settings only on launch. If you don't see changes, reload (`Cmd+Shift+,`)
+- The menu bar settings are undocumented numbers, so a macOS update might break them
+- `com.tailscale.up` exists because the Tailscale app [doesn't reconnect after login - tailscale#21092](https://github.com/tailscale/tailscale/issues/21092). Remove when fixed.
 
 ## Credits
 
