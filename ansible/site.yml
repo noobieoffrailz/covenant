@@ -10,3 +10,4 @@
     - { role: mise, tags: [mise] }
     - { role: shell, tags: [shell] }
     - { role: repo, tags: [repo] }
+    - { role: post_install, tags: [never, post-install] }

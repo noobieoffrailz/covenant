@@ -1,0 +1,55 @@
+# Steps that need 1Password. Only runs when asked for:
+#   ansible-playbook ansible/site.yml --limit "$(hostname -s)" --tags post-install
+- name: Check 1Password CLI (asks for Touch ID if needed)
+  ansible.builtin.command: op vault list
+  environment: &op_env
+    PATH: "/opt/homebrew/bin:{{ ansible_facts['env']['PATH'] }}"
+  register: op_check
+  changed_when: false
+  failed_when: false
+
+- name: Require 1Password CLI
+  ansible.builtin.fail:
+    msg: >-
+      1Password CLI is not available. Sign in to 1Password and enable
+      Settings → Developer → "Integrate with 1Password CLI", then run again.
+      op said: {{ op_check.stderr | default('') }}
+  when: op_check.rc != 0
+
+# home/**/*.tpl -> ~/**/* with op:// references filled in
+- name: Find templates in home/
+  ansible.builtin.find:
+    paths: "{{ repo_dir }}/home"
+    patterns: "*.tpl"
+    hidden: true
+    recurse: true
+  register: home_templates
+
+- name: Render templates
+  ansible.builtin.command: op inject -i "{{ item.path }}"
+  environment: *op_env
+  loop: "{{ home_templates.files }}"
+  loop_control:
+    label: "{{ item.path | relpath(repo_dir ~ '/home') }}"
+  register: rendered
+  changed_when: false
+  no_log: true
+
+- name: Create directories for templates
+  ansible.builtin.file:
+    path: "{{ home_dir }}/{{ item.path | relpath(repo_dir ~ '/home') | dirname }}"
+    state: directory
+    mode: "0700"
+  loop: "{{ home_templates.files }}"
+  loop_control:
+    label: "{{ item.path | relpath(repo_dir ~ '/home') | dirname }}"
+
+- name: Write rendered files
+  ansible.builtin.copy:
+    content: "{{ item.stdout }}\n"
+    dest: "{{ home_dir }}/{{ item.item.path | relpath(repo_dir ~ '/home') | regex_replace('\\.tpl$', '') }}"
+    mode: "0600"
+  loop: "{{ rendered.results }}"
+  loop_control:
+    label: "{{ item.item.path | relpath(repo_dir ~ '/home') | regex_replace('\\.tpl$', '') }}"
+  no_log: true

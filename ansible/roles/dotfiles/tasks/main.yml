@@ -22,7 +22,7 @@
   loop_control:
     label: "{{ item.path | dirname | basename }}"
 
-# home/* -> ~/* (files are linked one by one, directories are created)
+# home/* -> ~/* (files are linked one by one; *.tpl files are rendered by post-install instead)
 - name: Ensure ~/.ssh exists
   ansible.builtin.file:
     path: "{{ home_dir }}/.ssh"
@@ -34,6 +34,7 @@
     paths: "{{ repo_dir }}/home"
     hidden: true
     recurse: true
+    excludes: "*.tpl"
   register: home_files
 
 - name: Link home files

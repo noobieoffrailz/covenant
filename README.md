@@ -20,14 +20,31 @@ The script will:
 - clone this repo
 - rename the machine to `<Name>` (it asks if you leave that out)
 - run `brew bundle` and then the playbook
+- pause for 1Password, then run the post-install step (see below)
+
+### Post-install
+
+Some things need secrets from 1Password, like the SSH host configs. Near the end, the installation process stops and asks you to:
+
+1. sign in to 1Password
+2. in `Settings → Developer` turn on:
+   - "Use the SSH Agent"
+   - "Integrate with 1Password CLI"
+3. return to the terminal and press Enter
+
+If you skip it (`s`), run it later:
+
+```fish
+ansible-playbook ansible/site.yml --limit (hostname -s) --tags post-install
+```
+> [!NOTE]
+> Post-install never runs on its own, not even after `git pull`. This is so that 1Password won't keep asking for Touch ID.
 
 ### Postrequisites
 
 These need to be done manually after installation:
 
 - **Log out and back in**: this will apply rest of the changes
-- **1Password**: sign in, and enable "SSH Agent"
-  - Settings → Developer → turn on "Use the SSH Agent" and "Integrate with 1Password CLI"
 - **Tailscale**: sign in, and enable "CLI Integration"
   - Settings → CLI Integration → "Add Now"
 - **System Preferences**:
@@ -64,6 +81,10 @@ For additional git identities, add `tools/git/config/profiles/<profile>.profile`
 **Launch agents**
 - put the plist in `macos/LaunchAgents/` and add its name to `launch_agents`, either in `ansible/group_vars/macs.yml` (every machine) or in a machine's `host_vars`
 
+**SSH hosts**
+- add `home/.ssh/config.d/<host>.tpl`, with secrets as 1Password references like `{{ op://Keys/<item-id>/<field> }}`
+- run the post-install step (see Installation → Post-install)
+
 **macOS settings**
 - add a line to `macos_defaults` in `ansible/group_vars/macs.yml`
 
@@ -83,4 +104,4 @@ For additional git identities, add `tools/git/config/profiles/<profile>.profile`
 
 ## Credits
 
-The Catppuccin themes for eza and lazygit are © Catppuccin, MIT licensed.
+Props to [Catppuccin](https://catppuccin.com) for themes and colors 💜

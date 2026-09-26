@@ -54,4 +54,14 @@ fi
 step "Ansible (asks for your password once, for sudo)"
 ansible-playbook ansible/site.yml --limit "$NAME" --ask-become-pass
 
+# 6. Steps that need 1Password
+step "1Password"
+echo "Sign in to 1Password, then enable Settings → Developer → \"Integrate with 1Password CLI\"."
+read -r -p "Press Enter to continue, or s to skip: " answer
+if [ "$answer" = "s" ]; then
+    echo "Skipped. Run later: ansible-playbook ansible/site.yml --limit $NAME --tags post-install"
+else
+    ansible-playbook ansible/site.yml --limit "$NAME" --tags post-install
+fi
+
 step "Done. Log out and back in, then follow the checklist in README.md"
