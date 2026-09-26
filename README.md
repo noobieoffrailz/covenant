@@ -46,9 +46,10 @@ To run the playbook by hand (add `--ask-become-pass` if it needs sudo):
 ansible-playbook ansible/site.yml --limit (hostname -s)
 ```
 
-## New additions
+## Additions
 
-**A new machine** needs three things, all named after `hostname -s`:
+**New machines**
+Every machine needs three things, all named after `hostname -s`:
 
 - an entry in `ansible/inventory.yml`
 - `ansible/host_vars/<Name>.yml`
@@ -56,18 +57,21 @@ ansible-playbook ansible/site.yml --limit (hostname -s)
 
 For additional git identities, add `tools/git/config/profiles/<profile>.profile`.
 
-**A new tool**
+**New tools**
 - make a `tools/<tool>/` folder with a `config/` folder, a `<tool>.fish`, or both
 - the `.fish` file also has to be added to the list in `config.fish`
 
-**A launch agent**
-- Put the plist in `macos/LaunchAgents/` and add its name to `launch_agents`, either in `ansible/group_vars/macs.yml` (every machine) or in a machine's `host_vars`
+**Launch agents**
+- put the plist in `macos/LaunchAgents/` and add its name to `launch_agents`, either in `ansible/group_vars/macs.yml` (every machine) or in a machine's `host_vars`
 
-**A macOS setting**
+**macOS settings**
 - add a line to `macos_defaults` in `ansible/group_vars/macs.yml`
 
-**A theme**
-- there's a short README in `tools/eza/config/themes/catppuccin/` and `tools/lazygit/config/themes/catppuccin/`
+**Themes and colors**
+- for shell, see `tools/fish/config/machines/<Name>.fish`
+- additionally, see README files for following tools:
+  - `tools/eza/config/themes/catppuccin/`
+  - `tools/lazygit/config/themes/catppuccin/`
 
 ## Gotchas
 
