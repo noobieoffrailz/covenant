@@ -1,3 +1,7 @@
+# LaunchAgents from macos/LaunchAgents/ (without .plist). Override per machine in host_vars.
+launch_agents:
+  - com.awake
+
 # Directories created in $HOME
 macos_directories:
   - Development

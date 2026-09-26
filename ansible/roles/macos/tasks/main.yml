@@ -4,28 +4,18 @@
     path: "{{ home_dir }}/Library/LaunchAgents"
     state: directory
 
-- name: Find LaunchAgents
-  ansible.builtin.find:
-    paths: "{{ repo_dir }}/macos/LaunchAgents"
-    patterns: "*.plist"
-  register: launch_agents
-
 - name: Link LaunchAgents
   ansible.builtin.include_tasks: "{{ playbook_dir }}/tasks/link.yml"
   vars:
-    link_src: "{{ item.path }}"
-    link_dest: "{{ home_dir }}/Library/LaunchAgents/{{ item.path | basename }}"
-  loop: "{{ launch_agents.files }}"
-  loop_control:
-    label: "{{ item.path | basename }}"
+    link_src: "{{ repo_dir }}/macos/LaunchAgents/{{ item }}.plist"
+    link_dest: "{{ home_dir }}/Library/LaunchAgents/{{ item }}.plist"
+  loop: "{{ launch_agents }}"
 
 - name: Start LaunchAgents
   community.general.launchd:
-    name: "{{ item.path | basename | regex_replace('\\.plist$', '') }}"
+    name: "{{ item }}"
     state: started
-  loop: "{{ launch_agents.files }}"
-  loop_control:
-    label: "{{ item.path | basename }}"
+  loop: "{{ launch_agents }}"
 
 # --- Directories ---
 - name: Create directories

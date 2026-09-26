@@ -15,7 +15,6 @@ brew "lazygit"
 brew "mas"
 brew "mise"
 brew "neovim"
-brew "tailscale"
 brew "tree"
 brew "zoxide"
 

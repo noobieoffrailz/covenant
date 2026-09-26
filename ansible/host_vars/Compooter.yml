@@ -1,1 +1,5 @@
 profile: compooter
+
+launch_agents:
+  - com.awake
+  - com.tailscale.up
