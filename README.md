@@ -24,6 +24,9 @@ The script will:
 
 ### Post-install
 
+> [!NOTE]
+> **Post-install** never runs on its own, not even after `git pull`. This is so that 1Password won't keep asking for Touch ID.
+
 Some things need secrets from 1Password, like the SSH host configs. Near the end, the installation process stops and asks you to:
 
 1. sign in to 1Password
@@ -37,12 +40,8 @@ If you skip it (`s`), run it later:
 ```fish
 ansible-playbook ansible/site.yml --limit (hostname -s) --tags post-install
 ```
-> [!NOTE]
-> Post-install never runs on its own, not even after `git pull`. This is so that 1Password won't keep asking for Touch ID.
 
-### Postrequisites
-
-These need to be done manually after installation:
+#### Post-post-install
 
 - **Log out and back in**: this will apply rest of the changes
 - **Tailscale**: sign in, and enable "CLI Integration"
