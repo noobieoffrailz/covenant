@@ -40,14 +40,11 @@ These need to be done manually after installation:
 - **Remote changes**: a git hook re-runs the playbook automatically after `git pull`
 - **New packages**: add to `Brewfile`, followed by `brew bundle`.
 
-To run the playbook by hand:
+To run the playbook by hand (add `--ask-become-pass` if it needs sudo):
 
 ```fish
 ansible-playbook ansible/site.yml --limit (hostname -s)
 ```
-
-> [!TIP]
-> Add `--ask-become-pass` if it needs sudo
 
 ## New additions
 
