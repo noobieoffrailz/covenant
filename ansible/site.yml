@@ -1,10 +1,12 @@
-# Run on the current machine:
-#   ansible-playbook ansible/site.yml --limit "$(hostname -s)" --ask-become-pass
+# Normally run via bootstrap.sh (first time) and .githooks (after git pull).
+# Manually on the current machine:
+#   ansible-playbook ansible/site.yml --limit "$(hostname -s)"
+# Packages are not managed here: bootstrap.sh runs `brew bundle`.
 - name: Configure macOS machines
   hosts: macs
   roles:
-    - { role: homebrew, tags: [homebrew] }
     - { role: dotfiles, tags: [dotfiles] }
     - { role: macos, tags: [macos] }
+    - { role: mise, tags: [mise] }
     - { role: shell, tags: [shell] }
     - { role: repo, tags: [repo] }

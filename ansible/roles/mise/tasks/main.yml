@@ -1,0 +1,13 @@
+# Install languages/tools from ~/.config/mise/config.toml (linked by the dotfiles role)
+- name: Check missing mise tools
+  ansible.builtin.command: mise ls --missing
+  environment:
+    PATH: "/opt/homebrew/bin:{{ ansible_facts['env']['PATH'] }}"
+  register: mise_missing
+  changed_when: false
+
+- name: Install mise tools
+  ansible.builtin.command: mise install --yes
+  environment:
+    PATH: "/opt/homebrew/bin:{{ ansible_facts['env']['PATH'] }}"
+  when: mise_missing.stdout | trim | length > 0
